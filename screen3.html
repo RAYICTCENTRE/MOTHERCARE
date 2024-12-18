@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Pre-Eclampsia Guardian</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e6f7ff, #d9f0ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .signup-container {
+            background: linear-gradient(to bottom, #ffffff, #f0f8ff);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+        .signup-header {
+            background: linear-gradient(45deg, #ff5e62, #ff9966);
+            padding: 10px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 15px;
+            color: #555;
+        }
+        .asterisk {
+            color: red;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            position: relative;
+        }
+        .input-group input,
+        .input-group select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #007BFF;
+        }
+        .input-group span {
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            color: #888;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .back-button {
+            background-color: #6c757d;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        .signup-message {
+            margin-top: 15px;
+            color: red;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .signup-container {
+                padding: 20px;
+                width: 90%;
+                max-width: 380px;
+            }
+            .signup-header {
+                font-size: 16px;
+            }
+            label {
+                font-size: 14px;
+            }
+            button {
+                font-size: 14px;
+            }
+            .input-group input,
+            .input-group select {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .signup-container {
+                padding: 15px;
+                width: 95%;
+                max-width: 350px;
+            }
+            .signup-header {
+                font-size: 14px;
+            }
+            label {
+                font-size: 12px;
+            }
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+            .input-group input,
+            .input-group select {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-header">
+            Sign Up for Pre-Eclampsia Guardian
+        </div>
+        <p>Please create an account to monitor your health during pregnancy.</p>
+
+        <div class="input-group">
+            <label for="firstName">First Name <span class="asterisk">*</span></label>
+            <input type="text" id="firstName" placeholder="Enter your first name" required>
+        </div>
+
+        <div class="input-group">
+            <label for="lastName">Last Name <span class="asterisk">*</span></label>
+            <input type="text" id="lastName" placeholder="Enter your last name" required>
+        </div>
+
+        <label for="countryCode">Phone Number <span class="asterisk">*</span></label>
+        <div class="input-group">
+            <select id="countryCode" required>
+                <option value="">Code</option>
+                <option value="+1">+1 (USA)</option>
+                <option value="+44">+44 (UK)</option>
+                <option value="+256">+256 (Uganda)</option>
+                <option value="+91">+91 (India)</option>
+                <option value="+61">+61 (Australia)</option>
+                <!-- Add more options as needed -->
+            </select>
+            <input type="text" id="phone" placeholder="Phone number" maxlength="10" required>
+        </div>
+
+        <label for="password">Create Password <span class="asterisk">*</span></label>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Create a password" required>
+            <span onclick="togglePassword('password')">&#128065;</span>
+        </div>
+
+        <label for="confirmPassword">Confirm Password <span class="asterisk">*</span></label>
+        <div class="input-group">
+            <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+            <span onclick="togglePassword('confirmPassword')">&#128065;</span>
+        </div>
+
+        <button type="button" onclick="handleSignUp()">Sign Up</button>
+        <button class="button" onclick="location.href='screen2.html'">Go Back</button>
+<button class="button" onclick="location.href='screen4.html'">FORWARD</button>
+
+        <p id="signupMessage" class="signup-message"></p>
+    </div>
+
+    <script>
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (field.type === "password") {
+                field.type = "text";
+            } else {
+                field.type = "password";
+            }
+        }
+
+        async function handleSignUp() {
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const countryCode = document.getElementById("countryCode").value;
+            const phone = document.getElementById("phone").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (!firstName || !lastName || !countryCode || !phone || !password || !confirmPassword) {
+                document.getElementById("signupMessage").innerText = "All fields are required!";
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                document.getElementById("signupMessage").innerText = "Passwords do not match!";
+                return;
+            }
+
+            const fullPhoneNumber = countryCode + phone;
+
+            try {
+                const response = await fetch("/signup", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ firstName, lastName, phone: fullPhoneNumber, password }),
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    window.location.href = "/screen4"; // Adjust to your Flask route
+                } else {
+                    document.getElementById("signupMessage").innerText = result.message || "An error occurred. Please try again.";
+                }
+            } catch (error) {
+                document.getElementById("signupMessage").innerText = "Network error: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

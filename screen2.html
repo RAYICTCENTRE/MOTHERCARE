@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pre-Eclampsia Guardian</title>
+    <style>
+        body {
+            background-color: #F0E68C;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #4B0082;
+        }
+
+        h1 {
+            color: #FFA500;
+        }
+
+        .login-container {
+            background-color: #FFFACD;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Welcome to Pre-Eclampsia Guardian!</h1>
+        <p>Please log in to monitor your health and well-being during pregnancy.</p>
+        
+        <input type="text" id="phone" placeholder="Enter your phone number" required>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <button class="button" onclick="handleLogin()">Login</button>
+        <p id="message"></p>
+        <p>You don't have an account? <button class="button" onclick="location.href='screen3.html'">Click here to sign up</button></p>
+        <button class="button" onclick="location.href='screen1.html'">Go Back</button>
+    </div>
+
+    <script>
+        async function handleLogin() {
+            const phone = document.getElementById("phone").value;
+            const password = document.getElementById("password").value;
+
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ phone, password }),
+            });
+
+            const result = await response.json();
+            document.getElementById("message").innerText = result.message;
+        }
+    </script>
+</body>
+</html>

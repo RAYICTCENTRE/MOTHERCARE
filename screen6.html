@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-eclampsia Symptom Checker</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0E68C;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background-color: #FFFACD;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: #4B0082;
+        }
+
+        h2 {
+            color: #FFA500;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        label, p {
+            font-size: 1em;
+            margin-bottom: 5px;
+            color: #4B0082;
+        }
+
+        /* Form Elements Styling */
+        .symptom-selector, input[type="text"], input[type="number"], select, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #4B0082;
+        }
+
+        select {
+            padding: 10px;
+            color: #4B0082;
+            background-color: #fff;
+        }
+
+        button {
+            background-color: #FFA500;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #FF8C00;
+        }
+
+        #symptom-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #symptom-list li {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #FFA500;
+            color: white;
+            border-radius: 15px;
+            margin: 5px;
+            font-size: 0.9em;
+        }
+
+        /* Recommendations Styling */
+        #recommendations {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+
+        /* Navigation Buttons Styling */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* Style for "Back" button */
+        .nav-buttons a:first-child {
+            background-color: #6A5ACD; /* Slate blue color for "Back" */
+        }
+
+        .nav-buttons a:first-child:hover {
+            background-color: #483D8B; /* Darker shade for hover */
+        }
+
+        /* Style for "Consult Doctor" button */
+        .nav-buttons a:last-child {
+            background-color: #FF4500; /* Orange-red color for "Consult Doctor" */
+        }
+
+        .nav-buttons a:last-child:hover {
+            background-color: #FF6347; /* Lighter orange for hover */
+        }
+
+        .nav-buttons a {
+            text-decoration: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            width: 48%;
+            text-align: center;
+            display: inline-block;
+            font-size: 1em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            label, p {
+                font-size: 0.9em;
+            }
+
+            button, .nav-buttons a {
+                font-size: 1em;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Pre-eclampsia Symptom Checker</h2>
+        <p>Select symptoms, enter blood pressure, and additional information.</p>
+
+        <form id="symptom-form">
+            <!-- Symptom Selection -->
+            <label for="symptom-dropdown">Select Symptoms:</label>
+            <div class="symptom-selector">
+                <select id="symptom-dropdown" multiple size="5">
+                    <option value="Headache">Headache</option>
+                    <option value="Swelling in hands or feet">Swelling in hands or feet</option>
+                    <option value="Blurred vision">Blurred vision</option>
+                    <option value="Severe abdominal pain">Severe abdominal pain</option>
+                    <option value="Nausea">Nausea</option>
+                    <option value="Rapid weight gain">Rapid weight gain</option>
+                    <option value="Shortness of breath">Shortness of breath</option>
+                    <option value="Decreased urine output">Decreased urine output</option>
+                </select>
+            </div>
+            <ul id="symptom-list"></ul>
+
+            <!-- Blood Pressure Input -->
+            <label for="blood-pressure">Blood Pressure Reading (mmHg):</label>
+            <input type="text" id="blood-pressure" placeholder="e.g., 120/80">
+
+            <!-- Urinalysis Checkbox -->
+            <label>
+                <input type="checkbox" id="urinalysis-test"> Have you taken a urinalysis test?
+            </label>
+
+            <!-- Protein in Urine - Conditional -->
+            <div id="protein-section" style="display: none; margin-top: 10px;">
+                <label>Do you have protein in your urine?</label><br>
+                <input type="radio" name="protein" value="Yes"> Yes
+                <input type="radio" name="protein" value="No"> No
+            </div>
+
+            <button type="submit">Get Recommendations</button>
+        </form>
+
+        <div id="recommendations"></div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="screen5.html">Back</a>
+            <a href="screen7.html">Consult Doctor</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const symptomDropdown = document.getElementById("symptom-dropdown");
+            const symptomList = document.getElementById("symptom-list");
+            const recommendationsDiv = document.getElementById("recommendations");
+            const urinalysisTestCheckbox = document.getElementById("urinalysis-test");
+            const proteinSection = document.getElementById("protein-section");
+
+            // Toggle protein section visibility
+            urinalysisTestCheckbox.addEventListener("change", () => {
+                proteinSection.style.display = urinalysisTestCheckbox.checked ? "block" : "none";
+            });
+
+            // Add selected symptoms to list on selection
+            symptomDropdown.addEventListener("change", () => {
+                const selectedOptions = Array.from(symptomDropdown.selectedOptions);
+                selectedOptions.forEach(option => addSymptom(option.value));
+            });
+
+            function addSymptom(symptom) {
+                if (!Array.from(symptomList.children).some(li => li.textContent === symptom)) {
+                    const li = document.createElement("li");
+                    li.textContent = symptom;
+                    li.addEventListener("click", () => li.remove());
+                    symptomList.appendChild(li);
+                }
+            }
+
+            // Submit form event
+            document.getElementById("symptom-form").addEventListener("submit", (e) => {
+                e.preventDefault();
+                
+                const selectedSymptoms = Array.from(symptomList.children).map(li => li.textContent);
+                const bloodPressure = document.getElementById("blood-pressure").value;
+                const proteinInUrine = document.querySelector('input[name="protein"]:checked')?.value || "No";
+
+                // Send symptoms to backend for recommendations
+                fetch("/process-symptoms", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        symptoms: selectedSymptoms,
+                        bloodPressure: bloodPressure,
+                        proteinInUrine: urinalysisTestCheckbox.checked ? proteinInUrine : "Not taken",
+                    }),
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    recommendationsDiv.innerHTML = `<p>${data.message}</p>`;
+                })
+                .catch((error) => {
+                    recommendationsDiv.innerHTML = "<p>Error processing symptoms. Please try again later.</p>";
+                    console.error("Error:", error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

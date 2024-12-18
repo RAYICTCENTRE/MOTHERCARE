@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mother Care</title>
+    <style>
+        /* Center all content */
+        body {
+            background-color: #ADD8E6; /* Light blue background */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh; /* Fill the viewport height */
+        }
+
+        /* Style for the logo image */
+        .logo {
+            width: 80%; /* Adjusts width to fit screen */
+            max-width: 600px; /* Max width for larger screens */
+            margin: 20px 0;
+        }
+
+        /* Container for the woman image */
+        .background-image {
+            background-image: url('assets/woman.png'); /* Adjusted for relative path */
+            background-repeat: no-repeat;
+            background-position: center bottom; /* Align image to the bottom */
+            background-size: contain; /* Ensures the entire image fits without cropping */
+            width: 100%;
+            height: calc(100vh - 140px); /* Adjust height to fill screen without overlapping with logo */
+            display: flex;
+            flex-direction: column; /* Align children vertically */
+            justify-content: flex-end; /* Push buttons to the bottom */
+            align-items: center; /* Center buttons horizontally */
+            padding-bottom: 20px; /* Add space below buttons */
+        }
+
+        /* General button styling */
+        .button {
+            font-family: Arial, sans-serif;
+            font-size: 26px;
+            padding: 10px 20px;
+            width: 250px; /* Set a fixed width for buttons */
+            border-radius: 25px; /* Rounded edges of 25 pixels */
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 5px 0; /* Space between buttons */
+            background-color: #FFA500; /* Orange background */
+            color: white; /* White text */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Dark shadow */
+        }
+
+        /* Button hover effects */
+        .button:hover {
+            background-color: #FF8C00; /* Darker orange on hover */
+            transform: scale(1.05); /* Slight scale effect */
+        }
+
+        /* Paragraph styling */
+        p {
+            margin: 5px 0; /* Reduced margin for paragraphs */
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo image at the top -->
+    <img src="assets/logo.png" alt="Logo" class="logo">
+    <p style="color: orange; font-size: 34px;"><b>Welcome to Pre-Eclampsia Guardian!</b></p>
+    <p style="color: black; font-size: 20px;"><b>To monitor your health and well-being during pregnancy.</b></p>
+    
+    <!-- Container with woman.png as background image, fully visible below the logo -->
+    <div class="background-image">
+        <button class="button" onclick="location.href='screen2.html'"><b>LOGIN</b></button>
+        <button class="button" onclick="location.href='screen3.html'"><b>SIGN UP</b></button>
+<br><font color="white"><b>FOR EMERGENCY CALL: 0785413934</b></font>
+
+    </div>
+
+</body>
+</html>
