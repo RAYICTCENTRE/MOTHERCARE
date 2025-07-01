@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - Pre-Eclampsia Guardian</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+    }
+
+    .sidebar {
+      position: fixed;
+      width: 240px;
+      height: 100%;
+      background-color: #2c3e50;
+      padding-top: 20px;
+    }
+
+    .sidebar h2 {
+      color: #ecf0f1;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ecf0f1;
+      padding: 12px 20px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #34495e;
+    }
+
+    .main {
+      margin-left: 240px;
+      padding: 20px;
+    }
+
+    .main h1 {
+      color: #2c3e50;
+      font-size: 28px;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .card a {
+      display: inline-block;
+      margin-top: 10px;
+      text-decoration: none;
+      color: #5cb85c;
+      font-weight: bold;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Manage Users</a>
+    <a href="#">Doctor Profiles</a>
+    <a href="#">Facilities</a>
+    <a href="#">Risk Reports</a>
+    <a href="#">Messages</a>
+    <a href="#">System Settings</a>
+    <a href="#">Log Out</a>
+  </div>
+
+  <div class="main">
+    <h1>Welcome, Admin</h1>
+    <p>Use the tools below to manage the Pre-Eclampsia Guardian platform.</p>
+
+    <div class="section">
+      <h2>User Management</h2>
+      <div class="card-container">
+        <div class="card">
+          <h3>Approve Doctor Accounts</h3>
+          <p>Review and approve pending doctor registrations.</p>
+          <a href="approve_doctors.php">Go</a>
+        </div>
+        <div class="card">
+          <h3>View All Users</h3>
+          <p>Search, deactivate, or reset passwords for users.</p>
+          <a href="manage_users.php">Go</a>
+        </div>
+        <div class="card">
+          <h3>Hospital Staff</h3>
+          <p>View and manage hospital administrators.</p>
+          <a href="hospital_staff.php">Go</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Data & Analytics</h2>
+      <div class="card-container">
+        <div class="card">
+          <h3>Risk Levels Summary</h3>
+          <p>Monitor high-risk patients across regions.</p>
+          <a href="risk_reports.php">Go</a>
+        </div>
+        <div class="card">
+          <h3>Visit Statistics</h3>
+          <p>View ANC trends and patient visit history.</p>
+          <a href="visit_analytics.php">Go</a>
+        </div>
+        <div class="card">
+          <h3>Export Data</h3>
+          <p>Download reports in PDF or Excel.</p>
+          <a href="export_data.php">Go</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Communication</h2>
+      <div class="card-container">
+        <div class="card">
+          <h3>Send SMS</h3>
+          <p>Notify patients of appointments and alerts.</p>
+          <a href="send_sms.php">Go</a>
+        </div>
+        <div class="card">
+          <h3>Send Email</h3>
+          <p>Broadcast health tips or urgent info to users.</p>
+          <a href="send_email.php">Go</a>
+        </div>
+        <div class="card">
+          <h3>View Feedback</h3>
+          <p>See messages submitted via contact forms.</p>
+          <a href="view_feedback.php">Go</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>System & Settings</h2>
+      <div class="card-container">
+        <div class="card">
+          <h3>Configure Risk Rules</h3>
+          <p>Adjust BP thresholds or other alerts.</p>
+          <a href="risk_settings.php">Go</a>
+        </div>
+        <div class="card">
+          <h3>Account Recovery</h3>
+          <p>Manually help users with password resets.</p>
+          <a href="reset_requests.php">Go</a>
+        </div>
+        <div class="card">
+          <h3>Database Backup</h3>
+          <p>Export and store the system backup.</p>
+          <a href="backup.php">Go</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -24,7 +24,7 @@
 
         /* Container for the woman image */
         .background-image {
-            background-image: url('woman.png'); /* Updated to reflect root directory path */
+            background-image: url('assets/woman.png'); /* Adjusted for relative path */
             background-repeat: no-repeat;
             background-position: center bottom; /* Align image to the bottom */
             background-size: contain; /* Ensures the entire image fits without cropping */
@@ -67,16 +67,14 @@
 </head>
 <body>
     <!-- Logo image at the top -->
-    <img src="logo.png" alt="Logo" class="logo"> <!-- Updated to reflect root directory path -->
-    <p style="color: purple; font-size: 25px;"><b>Welcome to Pre-Eclampsia Guardian!</b></p>
+    <img src="assets/logo.png" alt="Logo" class="logo">
+    <p style="color: orange; font-size: 34px;"><b>Welcome to Pre-Eclampsia Guardian!</b></p>
     <p style="color: black; font-size: 20px;"><b>To monitor your health and well-being during pregnancy.</b></p>
     
     <!-- Container with woman.png as background image, fully visible below the logo -->
     <div class="background-image">
         <button class="button" onclick="location.href='screen2.html'"><b>LOGIN</b></button>
         <button class="button" onclick="location.href='screen3.html'"><b>SIGN UP</b></button>
-        <br><font color="white"><b>FOR EMERGENCY CALL: 0785413934</b></font>
     </div>
-
 </body>
 </html>

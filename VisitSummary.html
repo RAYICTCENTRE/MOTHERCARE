@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MotherCare – Client Visit Summary Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+      margin: 0;
+    }
+    h1 {
+      color: #6a1b9a;
+      margin-bottom: 20px;
+    }
+    .nav {
+      background: #6a1b9a;
+      padding: 10px 20px;
+      display: flex;
+      gap: 12px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+    .nav button, .nav a {
+      background: #3949ab;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+      font-size: 0.9rem;
+    }
+    .nav button:hover, .nav a:hover {
+      background: #303f9f;
+    }
+    .info, .visits {
+      background: #fff;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background: #eee;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav" id="nav-bar">
+    <!-- Buttons will be inserted here by JS -->
+  </div>
+
+  <h1>MotherCare – Client Visit Summary Report</h1>
+  <div class="info" id="info">Loading...</div>
+  <div class="visits" id="visits"></div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get("user_id");
+
+    // Create navigation buttons dynamically with user_id preserved
+    const navBar = document.getElementById('nav-bar');
+    if (userId) {
+      navBar.innerHTML = `
+        <a href="dashboard.php?user_id=${encodeURIComponent(userId)}">Dashboard</a>
+        <a href="screen4.html?user_id=${encodeURIComponent(userId)}">Set Up Profile</a>
+        <a href="screen6.html?user_id=${encodeURIComponent(userId)}">Check Symptoms</a>
+        <a href="logout.php">Logout</a>
+      `;
+    } else {
+      navBar.innerHTML = `
+        <a href="dashboard.php">Dashboard</a>
+        <a href="screen4.html">Set Up Profile</a>
+        <a href="screen6.html">Check Symptoms</a>
+        <a href="logout.php">Logout</a>
+      `;
+    }
+
+    if (!userId) {
+      document.getElementById("info").innerHTML = "<p class='error'>❌ No user ID provided in the URL.</p>";
+    } else {
+      fetch(`VisitSummary.php?user_id=${encodeURIComponent(userId)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.error) {
+            document.getElementById("info").innerHTML = `<p class="error">⚠ ${data.error}</p>`;
+            return;
+          }
+
+          const infoHTML = `
+            <strong>Name:</strong> ${data.name}<br>
+            <strong>Email:</strong> ${data.email}<br>
+            <strong>DOB:</strong> ${data.dob}<br>
+            <strong>Nationality:</strong> ${data.nationality}<br>
+            <strong>District:</strong> ${data.district}<br>
+            <strong>Sub-County:</strong> ${data.sub_county}<br>
+            <strong>Parish:</strong> ${data.parish}<br>
+            <strong>Village:</strong> ${data.village}<br>
+            <strong>Nearest Health Center:</strong> ${data.nearest_health}<br>
+            <strong>Next of Kin:</strong> ${data.kin_name} (${data.kin_relationship}, ${data.kin_contact})<br>
+            <strong>Expected Delivery:</strong> ${data.expected_delivery}<br>
+            <strong>Registered on:</strong> ${data.registered_on}<br>
+          `;
+          document.getElementById("info").innerHTML = infoHTML;
+
+          if (data.visits.length > 0) {
+            let table = `
+              <h2>Visit History</h2>
+              <table>
+                <tr><th>Date</th><th>Risk Score</th><th>Risk Level</th></tr>
+            `;
+            data.visits.forEach(v => {
+              table += `<tr><td>${v.date}</td><td>${v.risk_score}</td><td>${v.risk_level}</td></tr>`;
+            });
+            table += "</table>";
+            document.getElementById("visits").innerHTML = table;
+          } else {
+            document.getElementById("visits").innerHTML = "<p>No visits found.</p>";
+          }
+        })
+        .catch(err => {
+          document.getElementById("info").innerHTML = "<p class='error'>⚠ Failed to fetch data from server.</p>";
+          console.error(err);
+        });
+    }
+  </script>
+</body>
+</html>

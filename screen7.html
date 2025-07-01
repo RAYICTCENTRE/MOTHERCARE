@@ -1,97 +1,138 @@
+<?php
+// Database connection
+$host = "localhost";
+$username = "root";
+$password = "";
+$dbname = "mothercare";
+
+$conn = new mysqli($host, $username, $password, $dbname);
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch doctor profiles
+$sql = "SELECT * FROM doctors";
+$result = $conn->query($sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consult a Doctor</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to bottom, #e6f7ff, #d9f0ff);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Consult a Doctor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #e6f7ff, #d9f0ff);
+      text-align: center;
+    }
 
-        h2 {
-            color: #333;
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+    h2 {
+      color: #333;
+      font-size: 28px;
+      margin-top: 20px;
+    }
 
-        p {
-            color: #555;
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
+    p {
+      color: #555;
+      font-size: 16px;
+      max-width: 700px;
+      margin: 10px auto 30px auto;
+    }
 
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
+    .doctor-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
 
-        .nav-buttons a {
-            text-decoration: none;
-            background: linear-gradient(45deg, #ff5e62, #ff9966);
-            color: white;
-            padding: 14px 30px;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background 0.3s ease;
-        }
+    .doctor-card {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 250px;
+      text-align: left;
+    }
 
-        .nav-buttons a:hover {
-            background: linear-gradient(45deg, #ff9966, #ff5e62);
-        }
+    .doctor-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h2 {
-                font-size: 24px;
-            }
+    .doctor-card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #4B0082;
+    }
 
-            p {
-                font-size: 14px;
-            }
+    .doctor-card p {
+      margin: 4px 0;
+      font-size: 14px;
+      color: #444;
+    }
 
-            .nav-buttons a {
-                padding: 12px 25px;
-                font-size: 14px;
-            }
-        }
+    .nav-buttons {
+      margin-top: 30px;
+    }
 
-        @media (max-width: 480px) {
-            h2 {
-                font-size: 20px;
-            }
+    .nav-buttons a {
+      text-decoration: none;
+      background: linear-gradient(45deg, #ff5e62, #ff9966);
+      color: #fff;
+      padding: 14px 30px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      margin: 10px;
+      display: inline-block;
+    }
 
-            p {
-                font-size: 12px;
-            }
+    .nav-buttons a:hover {
+      background: linear-gradient(45deg, #ff9966, #ff5e62);
+    }
 
-            .nav-buttons a {
-                padding: 10px 20px;
-                font-size: 12px;
-            }
-        }
-    </style>
+    @media (max-width: 600px) {
+      .doctor-card {
+        width: 90%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div>
-        <h2>Consult a Doctor</h2>
-        <p>If you are experiencing severe symptoms, it is recommended that you consult a healthcare provider immediately.</p>
+  <h2>Consult a Doctor</h2>
+  <p>If you are experiencing severe symptoms, please consult a healthcare provider immediately.</p>
 
-        <div class="nav-buttons">
-            <a href="screen6.html">Back</a>
-            <a href="screen1.html">Contact Us</a>
+  <div class="doctor-grid">
+    <?php if ($result && $result->num_rows > 0): ?>
+      <?php while ($row = $result->fetch_assoc()): ?>
+        <div class="doctor-card">
+          <img src="<?= htmlspecialchars($row['photo']) ?>" alt="Doctor Photo" />
+          <h3><?= htmlspecialchars($row['specialty']) ?></h3>
+          <p><strong>Qualifications:</strong> <?= htmlspecialchars($row['qualifications']) ?></p>
+          <p><strong>Facility:</strong> <?= htmlspecialchars($row['facility']) ?></p>
+          <p><strong>Contact:</strong> <?= htmlspecialchars($row['dcontact']) ?></p>
         </div>
-    </div>
+      <?php endwhile; ?>
+    <?php else: ?>
+      <p>No doctor profiles found.</p>
+    <?php endif; ?>
+  </div>
+
+  <div class="nav-buttons">
+    <a href="dashboard.php">← Back to Dashboard</a>
+    <a href="screen1.html">Contact Us →</a>
+  </div>
 </body>
 </html>
+
+<?php
+$conn->close();
+?>
